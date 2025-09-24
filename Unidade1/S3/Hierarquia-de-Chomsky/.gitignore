@@ -1,0 +1,13 @@
+# .gitignore (exemplo)
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+env/
+venv/
+*.egg-info/
+dist/
+build/
+.DS_Store
+*.log
