@@ -1,113 +1,122 @@
 ### Projeto: Exercícios — Hierarquia de Chomsky e Máquinas
 
-Conteúdo:
+Descrição
+---------
 
-- `src/exercises.py`: implementações em Python com respostas objetivas e exemplos algorítmicos:
-  - Respostas (funções `q1()`..`q10()`)
-  - `dfa_even_a(s)` — DFA que aceita cadeias com número par de 'a'
-  - `pda_an_bn(s)` — PDA simples que reconhece a^n b^n
-  - `tm_increment_binary(bin_str)` — simulador simples de Máquina de Turing para incremento binário
+Ferramentas e exercícios didáticos sobre autômatos e a hierarquia de Chomsky. A interface gráfica (`src.gui`) ajuda a listar e executar testes em `tests/` e a executar os exemplos em `src/exercises.py`.
 
-- `tests/test_exercises.py`: testes automatizados (pytest)
+Execução rápida
+---------------
 
-Como executar:
+Se você estiver no Windows, o script `run_all.bat` automatiza a criação/ativação do ambiente virtual, instala dependências e (opcionalmente) inicia a GUI. Recomendo começar por ele:
 
-1. Executar o módulo diretamente (mostra demos):
-
-```bash
-python -m src.exercises
+```cmd
+run_all.bat
 ```
 
-2. Rodar testes com `pytest`:
+Estrutura principal
+------------------
 
-```bash
-pytest
-```
+- `src/exercises.py`: respostas e demos (funções `q1()`..`q10()`, `dfa_even_a`, `pda_an_bn`, `tm_increment_binary`).
+- `src/gui.py`: interface Tkinter para listar testes e executar exercícios.
+- `tests/test_exercises.py`: suíte de testes usando `pytest`.
 
-5. Executar a interface visual (Tkinter) para listar e rodar testes/exercícios:
+Como executar (resumido)
+-----------------------
 
-```bash
-python -m src.gui
-```
+As instruções abaixo assumem que você está em Windows (`cmd.exe`). Ajuste conforme necessário para PowerShell/Linux/macOS.
 
-Isso abrirá uma janela com a lista de arquivos de teste (em `tests/`), botões para rodar os testes selecionados, rodar todos os testes, e um botão para executar os exercícios (`src.exercises`) — a saída é mostrada na área de texto.
-
-Observações:
-
-- As implementações são educacionais e destinadas a demonstração didática.
-- Requer Python 3.8+ e `pytest` para rodar os testes.
-
-Detalhes para abrir o projeto no VS Code e executar localmente
------------------------------------------------------------
-
-1) Abrir o projeto no VS Code
-
-- Abra o VS Code e escolha "Open Folder..." (Arquivo → Abrir Pasta) e selecione a pasta do projeto:
-  `D:\UNIC\linguagens-formais-automatos`.
-
-2) Criar e ativar um virtualenv (recomendado)
-
-- No Windows (cmd.exe) dentro da pasta do projeto:
+1) Criar e ativar ambiente virtual (recomendado)
 
 ```cmd
 python -m venv .venv
 .venv\Scripts\activate
 ```
 
-Se preferir PowerShell:
-
-```powershell
-python -m venv .venv
-.venv\Scripts\Activate.ps1
-```
-
-3) Instalar dependências
+2) Instalar dependências
 
 ```cmd
 python -m pip install --upgrade pip
 python -m pip install pytest
 ```
 
-Se quiser fixar dependências, crie um `requirements.txt` com `pytest` e rode `pip install -r requirements.txt`.
-
-4) Rodar a interface gráfica (GUI)
-
-Com o virtualenv ativado e estando no diretório do projeto:
+3) Rodar testes
 
 ```cmd
-python -m src.gui
+python -m pytest -q
 ```
 
-Isso abrirá a janela com a lista de testes, botões para executá-los e a área de saída.
-
-5) Rodar testes pela linha de comando (opcional)
-
-```cmd
-pytest
-```
-
-6) Executar os exercícios (demos) pela linha de comando (opcional)
+4) Executar demos (terminal)
 
 ```cmd
 python -m src.exercises
 ```
 
-Dicas extras
--------------
-- Se a janela da GUI não abrir, verifique se o Python tem suporte a Tkinter (na instalação oficial do Windows costuma vir junto). Para checar no terminal:
+5) Executar a GUI
+
+IMPORTANTE: execute a GUI a partir da raiz do projeto (não do diretório `src`).
+
+```cmd
+cd D:\...\Hierarquia-de-Chomsky
+python -m src.gui
+```
+
+Aviso: NÃO execute `src/gui.py` diretamente (por exemplo `python src/gui.py`) — isso pode causar erros de importação. Se precisar executar de dentro de `src`, veja a seção de solução de problemas abaixo.
+
+Solução de problemas comum
+--------------------------
+
+- Erro: `ModuleNotFoundError: No module named 'src'`
+  - Causa: executar `python -m src.gui` estando dentro de `.../src` faz com que o interpretador espere um pacote `src` dentro do diretório atual.
+  - Correto: execute a partir da raiz do projeto (veja o passo 5 acima) ou ajuste `PYTHONPATH` (não recomendado como prática padrão):
+
+```cmd
+cd D:\...\Hierarquia-de-Chomsky\src
+set PYTHONPATH=%CD%\..
+python -m src.gui
+```
+
+- VS Code: use uma configuração `launch.json` que execute o módulo `src.gui` com `cwd` apontando para a raiz do projeto (exemplo abaixo).
+
+Exemplo de `launch.json` (VS Code)
+
+```json
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run GUI (module)",
+      "type": "python",
+      "request": "launch",
+      "module": "src.gui",
+      "cwd": "${workspaceFolder}/Unidade1/S3/Hierarquia-de-Chomsky"
+    }
+  ]
+}
+```
+
+Observações
+-----------
+
+- As implementações são educacionais e destinadas a demonstração didática.
+- Requer Python 3.8+ e `pytest` para rodar os testes.
+
+Dicas rápidas
+------------
+
+- Verificar Tkinter (Windows):
 
 ```cmd
 python -c "import tkinter; print(tkinter.TkVersion)"
 ```
 
-- Se o comando acima falhar, instale a versão do Python que inclua Tkinter ou habilite o componente apropriado.
-- Para re-executar a lista de testes sem reiniciar a GUI, você pode fechar e reabrir a janela (ou eu adiciono um botão Refresh se preferir).
+- Para re-executar a lista de testes na GUI sem reiniciar, feche e reabra a janela (posso adicionar um botão "Refresh" se preferir).
 
-Arquivos úteis incluídos
-------------------------
+Arquivos úteis
+-------------
 
-- `requirements.txt`: lista mínima de dependências (`pytest`) para rodar os testes.
-- `run_all.bat`: script Windows que cria/ativa `.venv`, instala dependências e executa a GUI.
+- `requirements.txt`: lista mínima de dependências (ex.: `pytest`).
+- `run_all.bat`: script Windows que cria/ativa `.venv`, instala dependências e (opcionalmente) executa a GUI.
 
 Para usar o `run_all.bat`, abra o Explorer na pasta do projeto e dê um duplo-clique, ou rode no `cmd.exe`:
 
