@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # 📘 Linguagens Formais e Autômatos
 
 **Disciplina:** Linguagens Formais e Autômatos 
@@ -168,4 +167,3 @@ Para usar o `run_all.bat`, abra o Explorer na pasta do projeto e dê um duplo-cl
 ```cmd
 run_all.bat
 ```
->>>>>>> 3b940b3 (Initial commit - exercícios e GUI)
